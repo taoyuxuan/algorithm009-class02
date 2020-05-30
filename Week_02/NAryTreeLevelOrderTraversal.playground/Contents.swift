@@ -84,3 +84,33 @@ let tree: Node = Node.createTree([1: [3,2,4], 3:[5,6]], 1)
 let solu = Solution()
 let result = solu.levelOrder(tree)
 print(result)
+
+
+// *********************** 解法二 递归 **************************//
+/// 递归
+/// 不太好想出来，但是看一遍，理解起来也还好
+class Solution2 {
+    var ans: [[Int]] = []
+    func levelOrder(_ root: Node?) -> [[Int]] {
+        guard let root = root else {
+            return []
+        }
+        scanLevel(root, 0)
+        return ans
+    }
+    
+    func scanLevel(_ node: Node, _ level: Int) {
+        if ans.count <= level {
+            ans.append([])
+        }
+        ans[level].append(node.val)
+        
+        for item in node.children {
+            scanLevel(item, level+1)
+        }
+    }
+}
+let tree2: Node = Node.createTree([1: [3,2,4], 3:[5,6]], 1)
+let solu2 = Solution2()
+let result2 = solu2.levelOrder(tree2)
+print(result2)
