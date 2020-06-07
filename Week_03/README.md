@@ -66,3 +66,14 @@ var recursion(level, param1, param2,…) {
 
  4.清理当前层 clean current level
 
+
+
+分治思路：
+
+1.终止条件 recursion terminator 
+
+2.准备数据 prepare data
+
+3.解决子问题 conquer subproblems
+
+4.合并子问题 process and generate
