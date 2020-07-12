@@ -48,7 +48,7 @@ class Solution2 {
             let inum: Int = nums[i]
             var preidx: Int = i - 1
             
-            while nums[preidx] > inum {
+            while preidx >= 0 && nums[preidx] > inum {
                 let tmp: Int = nums[preidx]
                 nums[preidx] = inum
                 nums[preidx+1] = tmp
@@ -61,7 +61,7 @@ class Solution2 {
 }
 var nums2: [Int] = [4,6,9,1,3,2,0,2,5,7]
 let solu2 = Solution2()
-let result2 = solu2.sort(&nums1)
+let result2 = solu2.sort(&nums2)
 print(result2)
 
 // ************************ 解法三 冒泡排序 ************************//
@@ -72,7 +72,7 @@ class Solution3 {
         let cnt = nums.count
         if cnt == 0 { return [] }
         
-        for i in 0..<cnt {
+        for i in (0..<cnt).reversed() {
             for j in 0..<i {
                 if nums[j] > nums[j+1] {
                     let tmp: Int = nums[j]
@@ -87,64 +87,101 @@ class Solution3 {
 }
 var nums3: [Int] = [4,6,9,1,3,2,0,2,5,7]
 let solu3 = Solution3()
-let result3 = solu3.sort(&nums1)
+let result3 = solu3.sort(&nums3)
 print(result3)
 
 
-// ************************ 解法四 快速排序 ************************//
-// 原地排序 非稳定排序
-// 时间复杂度 O(nlogn) 空间复杂度: O(logn)  主要是递归所占的空间
-class Solution4 {
-    func sort(_ nums: inout [Int]) -> [Int] {
-        let cnt: Int = nums.count
-        if cnt == 0 { return [] }
-        quickSort(0, cnt-1, &nums)
-        return nums
-    }
-    
-    private func quickSort(_ l: Int, _ r: Int, _ nums: inout [Int]) {
-        if l >= r { return }
-        let mid: Int = partionIndex(l, r, &nums)
-        quickSort(l, mid-1, &nums)
-        quickSort(mid+1, r, &nums)
-    }
-    
-    private func partionIndex(_ l: Int, _ r: Int, _ nums: inout [Int]) -> Int {
-        if l > r { abort() }
-        if l == r { return l }
-        
-        let num: Int = nums[l]
-        var ll: Int = l
-        var rr: Int = r
-        
-        while ll < rr && nums[rr] >= num { rr -= 1 }
-        nums[ll] = nums[rr]
-        while ll < rr && nums[ll] <= num { ll += 1 }
-        nums[rr] = nums[ll]
-        nums[ll] = num
-        return ll
-    }
-}
-var nums4: [Int] = [4,6,9,1,3,2,0,2,5,7]
-let solu4 = Solution4()
-let result4 = solu4.sort(&nums1)
-print(result4)
 
 
-// ************************ 解法四 堆排序 ************************//
-// 原地排序 非稳定排序
-// 时间复杂度 O(nlogn) 空间复杂度: O(logn)  主要是递归所占的空间
-class Solution5 {
-    func sort(_ nums: inout [Int]) -> [Int] {
-        let cnt: Int = nums.count
-        if cnt == 0 { return [] }
-        
-        for i in 0..<cnt/2 {
-            heapify(<#T##i: Int##Int#>, <#T##nums: &[Int]##[Int]#>)
-        }
-    }
-    
-    private func heapify(_ i: Int, _ nums: inout [Int]) {
-        
-    }
-}
+//// ************************ 解法四 快速排序 ************************//
+//// 原地排序 非稳定排序
+//// 时间复杂度 O(nlogn) 空间复杂度: O(logn)  主要是递归所占的空间
+//class Solution4 {
+//    func sort(_ nums: inout [Int]) -> [Int] {
+//        let cnt: Int = nums.count
+//        if cnt == 0 { return [] }
+//        quickSort(0, cnt-1, &nums)
+//        return nums
+//    }
+//
+//    private func quickSort(_ l: Int, _ r: Int, _ nums: inout [Int]) {
+//        if l >= r { return }
+//        let mid: Int = partionIndex(l, r, &nums)
+//        quickSort(l, mid-1, &nums)
+//        quickSort(mid+1, r, &nums)
+//    }
+//
+//    private func partionIndex(_ l: Int, _ r: Int, _ nums: inout [Int]) -> Int {
+//        if l > r { abort() }
+//        if l == r { return l }
+//
+//        let num: Int = nums[l]
+//        var ll: Int = l
+//        var rr: Int = r
+//
+//        while ll < rr && nums[rr] >= num { rr -= 1 }
+//        nums[ll] = nums[rr]
+//        while ll < rr && nums[ll] <= num { ll += 1 }
+//        nums[rr] = nums[ll]
+//        nums[ll] = num
+//        return ll
+//    }
+//}
+//var nums4: [Int] = [4,6,9,1,3,2,0,2,5,7]
+//let solu4 = Solution4()
+//let result4 = solu4.sort(&nums4)
+//print(result4)
+//
+//
+//// ************************ 解法四 堆排序 ************************//
+//// 原地排序 非稳定排序
+//// 时间复杂度 O(nlogn) 空间复杂度: O(logn)  主要是递归所占的空间
+//class Solution5 {
+//    func sort(_ nums: inout [Int]) -> [Int] {
+//        let cnt: Int = nums.count
+//        if cnt == 0 { return [] }
+//
+//        var i = cnt/2
+//        while i >= 0 {
+//            heapify(i, cnt, &nums)
+//            i -= 1
+//        }
+//
+//        print(nums)
+//
+//        // 开始排序
+//        for i in (0..<cnt).reversed() {
+//            let tmp = nums[0]
+//            nums[0] = nums[i]
+//            nums[i] = tmp
+//            heapify(0, i, &nums)
+//        }
+//
+//        return nums
+//    }
+//
+//    private func heapify(_ i: Int, _ cnt: Int, _ nums: inout [Int]) {
+//        var curidx: Int = i
+//        while curidx*2+1 < cnt {
+//            let l: Int = curidx*2 + 1
+//            let r: Int = curidx*2 + 2
+//            var maxChild: Int = l
+//            if r < cnt && nums[l] > nums[r] {
+//                maxChild = r
+//            }
+//            if nums[maxChild] > nums[curidx] {
+//                let tmp = nums[curidx]
+//                nums[curidx] = nums[maxChild]
+//                nums[maxChild] = tmp
+//                curidx = maxChild
+//            } else {
+//                break
+//            }
+//        }
+//    }
+//}
+//var nums5: [Int] = [4,6,9,1,3,2,0,2,5,7]
+//let solu5 = Solution5()
+//let result5 = solu5.sort(&nums5)
+//print(result5)
+
